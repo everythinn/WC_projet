@@ -1,0 +1,14 @@
+.welcome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+button{
+    background-color: aqua;
+    color: white;
+    font-weight: bold;
+    border-color: aqua;
+    min-width: 100px;
+}
