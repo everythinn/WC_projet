@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f1419 0%, #1a2f23 50%, #0d1b14 100%);
+    color: #f5f1e8;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+// .fern-background {
+//     background-image: url("../../../../public/images/bracken.jpg");
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     min-height: 50vh;
+// }
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(15, 20, 25, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(245, 241, 232, 0.1);
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.site-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+    color: #f5f1e8;
+    text-shadow: 0 2px 20px rgba(245, 241, 232, 0.3);
+}
+
+.site-subtitle {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #d4c4a8;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.header-btn {
+    background: rgba(245, 241, 232, 0.1);
+    color: #f5f1e8;
+    padding: 0.8rem 1.8rem;
+    border: 1px solid rgba(245, 241, 232, 0.2);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 300;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.header-btn:hover {
+    background: rgba(245, 241, 232, 0.15);
+    border-color: rgba(245, 241, 232, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
