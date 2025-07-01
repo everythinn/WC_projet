@@ -22,7 +22,7 @@ public class ContextListener implements ServletContextListener {
 	public void contextDestroyed(final ServletContextEvent sce) {
 		EntityManager em = null;
 		try {
-			em = DaoBddHelper.getInstance().getEm();
+			em = DaoBddHelper.getInstance().getEntityManager();
 			em.getEntityManagerFactory().close();
 		} catch (final DaoException e) {
 			e.printStackTrace();

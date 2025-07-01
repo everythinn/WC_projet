@@ -22,7 +22,7 @@ public class ClanCatDaoBdd implements IDao<ClanCat> {
 	public ClanCat createObject(ClanCat clanCat) throws DaoException {
 		try {
 			this.bdd.beginTransaction();
-			this.bdd.getEm().persist(clanCat);
+			this.bdd.getEntityManager().persist(clanCat);
 			this.bdd.commitTransaction();
 			return clanCat;
 		} catch (final PersistenceException e) {
@@ -33,7 +33,7 @@ public class ClanCatDaoBdd implements IDao<ClanCat> {
 
 	@Override
 	public ClanCat readObject(int id) throws DaoException {
-		final TypedQuery<ClanCat> query = this.bdd.getEm().createNamedQuery("ClanCat.findById", ClanCat.class);
+		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findById", ClanCat.class);
 		query.setParameter("id", id);
 		final List<ClanCat> ret = query.getResultList();
 		if(ret.size()>0) {
@@ -44,22 +44,22 @@ public class ClanCatDaoBdd implements IDao<ClanCat> {
 
 	@Override
 	public List<ClanCat> readAllObject() throws DaoException {
-		final TypedQuery<ClanCat> query = this.bdd.getEm().createNamedQuery("ClanCat.findAll", ClanCat.class);
+		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findAll", ClanCat.class);
 		return query.getResultList();
 	}
 	
 	public List<ClanCat> readAllLeaders() throws DaoException {
-		final TypedQuery<ClanCat> query = this.bdd.getEm().createNamedQuery("ClanCat.findLeaders", ClanCat.class);
+		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findLeaders", ClanCat.class);
 		return query.getResultList();
 	}
 	
 	public List<ClanCat> readAllDeputies() throws DaoException {
-		final TypedQuery<ClanCat> query = this.bdd.getEm().createNamedQuery("ClanCat.findDeputies", ClanCat.class);
+		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findDeputies", ClanCat.class);
 		return query.getResultList();
 	}
 	
 	public List<ClanCat> readAllMedicineCats() throws DaoException {
-		final TypedQuery<ClanCat> query = this.bdd.getEm().createNamedQuery("ClanCat.findMedicineCats", ClanCat.class);
+		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findMedicineCats", ClanCat.class);
 		return query.getResultList();
 	}
 
@@ -67,7 +67,7 @@ public class ClanCatDaoBdd implements IDao<ClanCat> {
 	public void updateObject(ClanCat clanCat) throws DaoException {
 		try {
 			this.bdd.beginTransaction();
-			this.bdd.getEm().merge(clanCat);
+			this.bdd.getEntityManager().merge(clanCat);
 			this.bdd.commitTransaction();
 		} catch (final PersistenceException e) {
 			this.bdd.rollbackTransaction();
@@ -79,7 +79,7 @@ public class ClanCatDaoBdd implements IDao<ClanCat> {
 	public void deleteObject(ClanCat clanCat) throws DaoException {
 		try {
 			this.bdd.beginTransaction();
-			this.bdd.getEm().remove(clanCat);
+			this.bdd.getEntityManager().remove(clanCat);
 			this.bdd.commitTransaction();
 		} catch (final PersistenceException e) {
 			this.bdd.rollbackTransaction();

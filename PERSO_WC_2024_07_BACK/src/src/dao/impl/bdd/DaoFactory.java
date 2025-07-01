@@ -22,7 +22,7 @@ public class DaoFactory {
 		return DaoFactory.instance;
 	}
 	
-	public static IDao<Clan> getClanDao() throws DaoException {
+	public static IDao<Clan> getClanDao() throws Exception {
 		if (clanDao == null) {
 			clanDao = new ClanDaoBdd();
 		}

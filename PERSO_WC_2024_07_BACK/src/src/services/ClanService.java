@@ -27,7 +27,7 @@ public class ClanService {
 	/**
 	 * @GET all clans in database
 	 * @return
-	 * @throws DaoException
+	 * @throws DaoException 
 	 */
 	@GET
 	@Path("/all")
@@ -42,7 +42,7 @@ public class ClanService {
 			}
 			final GenericEntity<List<Clan>> json = new GenericEntity<List<Clan>>(clans) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -98,7 +98,7 @@ public class ClanService {
 			ClanDaoBdd clanDaoBdd = new ClanDaoBdd();
 			clanDaoBdd.createObject(clan);
 			return Response.status(Response.Status.CREATED).entity(clan).build();
-		} catch (final Exception e) {
+		} catch (final DaoException e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Clan creation failed").build();
 		}
 	}
@@ -195,7 +195,7 @@ public class ClanService {
 			} 
 			final GenericEntity<ClanCat> json = new GenericEntity<ClanCat>(leader) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -226,7 +226,7 @@ public class ClanService {
 			} 
 			final GenericEntity<ClanCat> json = new GenericEntity<ClanCat>(deputy) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -263,7 +263,7 @@ public class ClanService {
 				final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(medCats) {};
 				return Response.ok().entity(json).build();
 			}
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -294,7 +294,7 @@ public class ClanService {
 			} 
 			final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(warriors) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -325,7 +325,7 @@ public class ClanService {
 			} 
 			final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(apprentices) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -356,7 +356,7 @@ public class ClanService {
 			} 
 			final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(kits) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -387,7 +387,7 @@ public class ClanService {
 			} 
 			final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(elders) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}

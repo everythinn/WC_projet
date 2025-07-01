@@ -22,7 +22,7 @@ public class OutsiderDaoBdd implements IDao<Outsider> {
 	public Outsider createObject(Outsider out) throws DaoException {
 		try {
 			this.bdd.beginTransaction();
-			this.bdd.getEm().persist(out);
+			this.bdd.getEntityManager().persist(out);
 			this.bdd.commitTransaction();
 			return out;
 		} catch (final PersistenceException e) {
@@ -33,7 +33,7 @@ public class OutsiderDaoBdd implements IDao<Outsider> {
 
 	@Override
 	public Outsider readObject(int id) throws DaoException {
-		final TypedQuery<Outsider> query = this.bdd.getEm().createNamedQuery("Outsider.findById", Outsider.class);
+		final TypedQuery<Outsider> query = this.bdd.getEntityManager().createNamedQuery("Outsider.findById", Outsider.class);
 		query.setParameter("id", id);
 		final List<Outsider> ret = query.getResultList();
 		if(ret.size()>0) {
@@ -44,7 +44,7 @@ public class OutsiderDaoBdd implements IDao<Outsider> {
 
 	@Override
 	public List<Outsider> readAllObject() throws DaoException {
-		final TypedQuery<Outsider> query = this.bdd.getEm().createNamedQuery("Outsider.findAll", Outsider.class);
+		final TypedQuery<Outsider> query = this.bdd.getEntityManager().createNamedQuery("Outsider.findAll", Outsider.class);
 		return query.getResultList();
 	}
 
@@ -52,7 +52,7 @@ public class OutsiderDaoBdd implements IDao<Outsider> {
 	public void updateObject(Outsider out) throws DaoException {
 		try {
 			this.bdd.beginTransaction();
-			this.bdd.getEm().merge(out);
+			this.bdd.getEntityManager().merge(out);
 			this.bdd.commitTransaction();
 		} catch (final PersistenceException e) {
 			this.bdd.rollbackTransaction();
@@ -64,7 +64,7 @@ public class OutsiderDaoBdd implements IDao<Outsider> {
 	public void deleteObject(Outsider out) throws DaoException {
 		try {
 			this.bdd.beginTransaction();
-			this.bdd.getEm().remove(out);
+			this.bdd.getEntityManager().remove(out);
 			this.bdd.commitTransaction();
 		} catch (final PersistenceException e) {
 			this.bdd.rollbackTransaction();
