@@ -31,6 +31,24 @@ public class ClanCatDaoBdd implements IClanCatDao {
 		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findAll", ClanCat.class);
 		return query.getResultList();
 	}
+	
+	@Override
+	public List<ClanCat> getAllLeaders() {
+		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findLeaders", ClanCat.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<ClanCat> getAllDeputies() {
+		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findDeputies", ClanCat.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<ClanCat> getAllMedCats() {
+		final TypedQuery<ClanCat> query = this.bdd.getEntityManager().createNamedQuery("ClanCat.findMedCats", ClanCat.class);
+		return query.getResultList();
+	}
 
 	@Override
 	public ClanCat createClanCat(ClanCat clanCat) {

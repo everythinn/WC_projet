@@ -10,6 +10,12 @@ public interface IClanCatDao {
 	
 	public List<ClanCat> getAllClanCats();
 	
+	public List<ClanCat> getAllLeaders();
+	
+	public List<ClanCat> getAllDeputies();
+	
+	public List<ClanCat> getAllMedCats();
+	
 	public ClanCat createClanCat(ClanCat clanCat);
 	
 	public void updateClanCat(ClanCat clanCat);

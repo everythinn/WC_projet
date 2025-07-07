@@ -6,6 +6,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import enums.GenderEnum;
@@ -13,6 +15,13 @@ import enums.RankEnum;
 
 @Entity
 @Table(name="clancat")
+@NamedQueries({
+	@NamedQuery(name = "ClanCat.findById", query = "SELECT cc FROM ClanCat cc WHERE cc.id = :id"),
+	@NamedQuery(name = "ClanCat.findAll", query = "SELECT cc FROM ClanCat cc"),
+	@NamedQuery(name = "ClanCat.findLeaders", query = "SELECT cc FROM ClanCat cc WHERE cc.clanRank = :leader"),
+	@NamedQuery(name = "ClanCat.findDeputies", query = "SELECT cc FROM ClanCat cc WHERE cc.clanRank = :deputy"),
+	@NamedQuery(name = "ClanCat.findMedCats", query = "SELECT cc FROM ClanCat cc WHERE cc.clanRank = :medicine_cat")
+})
 public class ClanCat extends ACat {
 	
 	public String prefix;

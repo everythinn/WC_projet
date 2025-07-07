@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.bddimpl.ClanCatDaoBdd;
 import dao.bddimpl.DaoFactory;
+import dao.interfaces.IClanCatDao;
 import enums.GenderEnum;
 import enums.RankEnum;
 import exceptions.DaoException;
@@ -19,6 +20,7 @@ import jakarta.ws.rs.core.GenericEntity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
+import models.Clan;
 import models.ClanCat;
 
 @Path("/clancat")
@@ -34,15 +36,10 @@ public class ClanCatService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getClanCats() throws DaoException {
 		try {
-			DaoFactory.getInstance();
-			List<ClanCat> cats = null;
-			cats = DaoFactory.getClanCatDao().readAllObject();
-			if (cats == null || cats.isEmpty()) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Clan cats not found").build();
-			}
-			final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(cats) {};
+			final List<ClanCat> ret = DaoFactory.getInstance().getClanCatDao().getAllClanCats();
+			final GenericEntity<List<ClanCat>> json = new GenericEntity<>(ret) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -57,89 +54,111 @@ public class ClanCatService {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getClanCatById(@PathParam("id") int idClanCat) throws DaoException {
-		ClanCat cat = null;
+		ClanCat s = null;
 		try {
-			DaoFactory.getInstance();
-			cat = DaoFactory.getClanCatDao().readObject(idClanCat);
-			if (cat == null) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Clan cat not found").build();
-			} else {
-				final GenericEntity<ClanCat> json = new GenericEntity<ClanCat>(cat) {};				
-				return Response.status(Response.Status.OK).entity(json).build();
+			s = DaoFactory.getInstance().getClanCatDao().getClanCatById(idClanCat);
+			if(s == null) {
+				return Response.status(Response.Status.NOT_FOUND).entity("Aucun chat de Clan avec l'id [".concat(Integer.toString(idClanCat)).concat("] n'a été trouvé.")).build();
 			}
+			final GenericEntity<ClanCat> json = new GenericEntity<>(s) {};
+			return Response.ok().entity(json).build();
 		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
+	
 	/**
 	 * @POST creates new Clan cat
 	 * @param prefix AND suffix AND age AND gender (0 (female) or 1 (male)) AND appearance AND Clan AND rank (l (leader), d (deputy), m (med cat), w (warrior), a (apprentice), k (kit), e (elder))
 	 * @return
+	 * @throws Exception 
 	 */
 	@POST
-	@Consumes("application/x-www-form-urlencoded")
 	@Path("/add")
+	@Consumes("application/x-www-form-urlencoded")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addClanCat(final MultivaluedMap<String, String> formParams) {
+	public Response addClanCat(final MultivaluedMap<String, String> formParams) throws Exception {
 		if (formParams.get("prefix") == null || formParams.get("suffix") == null || formParams.get("age") == null || formParams.get("gender") == null 
 				|| formParams.get("appearance") == null || formParams.get("Clan") == null || formParams.get("rank") == null) {
-			return Response.status(Response.Status.EXPECTATION_FAILED).entity("Parameters missing").build();
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'un des paramètres obligatoires n'est pas fourni.").build();
+		}
+		final String prefix = formParams.getFirst("prefix");
+		final String suffix = formParams.getFirst("suffix");
+		final String ageTemp = formParams.getFirst("age");
+		final String genderTemp = formParams.getFirst("gender");
+		final String rankTemp = formParams.getFirst("rank");
+		final String appearance = formParams.getFirst("appearance");
+		final String clanIdTemp = formParams.getFirst("Clan");
+		if (prefix == null || prefix.isBlank() || suffix == null || suffix.isBlank() || ageTemp == null || ageTemp.isEmpty() || genderTemp == null || 
+				genderTemp.isBlank() || rankTemp == null || rankTemp.isBlank() || appearance == null || appearance.isBlank() || clanIdTemp == null || 
+				clanIdTemp.isBlank()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'un des paramètres obligatoires n'est pas fourni.").build();
+		}
+		int age;
+		int genderNb;
+		GenderEnum gender;
+		int clanId;
+		Clan clan;
+		RankEnum clanRank;
+		try {
+			age = Integer.parseInt(ageTemp);
+		} catch (final NumberFormatException e){
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'age fourni n'est pas valide.").build();
 		}
 		try {
-			final ClanCat clanCat = new ClanCat();
-			DaoFactory.getInstance();
-			final RankEnum rank;
-			switch(formParams.getFirst("rank")) {
-				case "l":
-					rank = RankEnum.LEADER;
-					break;
-				case "d":
-					rank = RankEnum.DEPUTY;
-					break;
-				case "m":
-					rank = RankEnum.MEDICINE_CAT;
-					break;
-				case "w":
-					rank = RankEnum.WARRIOR;
-					break;
-				case "a":
-					rank = RankEnum.APPRENTICE;
-					break;
-				case "k":
-					rank = RankEnum.KIT;
-					break;
-				case "e":
-					rank = RankEnum.ELDER;
-					break;
-				default:
-					rank = RankEnum.WARRIOR;
-					break;
-			}
-			final String prefix = formParams.getFirst("prefix");
-			final String suffix = formParams.getFirst("suffix");
-			final Integer age = Integer.parseInt(formParams.getFirst("age"));
-			final GenderEnum gender;
-			final Integer genderNb = Integer.parseInt(formParams.getFirst("gender"));
+			genderNb = Integer.parseInt(genderTemp);
 			if(genderNb == 0) {
 				gender = GenderEnum.FEMALE;
 			} else if (genderNb == 1){
 				gender = GenderEnum.MALE;
 			} else return Response.status(Response.Status.EXPECTATION_FAILED).entity("Gender incorrectly entered.").build();
-			final String appearance = formParams.getFirst("appearance");
-			final Integer clanId = Integer.parseInt(formParams.getFirst("clan"));
-			final Clan clan = DaoFactory.getClanDao().readObject(clanId);
-			clanCat.setPrefix(prefix);
-			clanCat.setSuffix(rank, suffix);
-			clanCat.setAge(age);
-			clanCat.setGender(gender);
-			clanCat.setAppearance(appearance);
-			clanCat.setClan(clan);
-			ClanCatDaoBdd clanCatDaoBdd = new ClanCatDaoBdd();
-			clanCatDaoBdd.createObject(clanCat);
-			return Response.status(Response.Status.CREATED).entity(clanCat).build();
+		} catch (final NumberFormatException e){
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'id de Clan fourni n'est pas valide.").build();
+		}
+		try {
+			clanId = Integer.parseInt(ageTemp);
+			try {
+				clan = DaoFactory.getInstance().getClanDao().getClanById(clanId);
+			} catch (Exception e) {
+				return Response.status(Response.Status.EXPECTATION_FAILED).entity("Clan id incorrectly entered.").build();
+			}
+		} catch (final NumberFormatException e){
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'id de Clan fourni n'est pas valide.").build();
+		}
+		switch(formParams.getFirst("rank")) {
+			case "l":
+				clanRank = RankEnum.LEADER;
+				break;
+			case "d":
+				clanRank = RankEnum.DEPUTY;
+				break;
+			case "m":
+				clanRank = RankEnum.MEDICINE_CAT;
+				break;
+			case "w":
+				clanRank = RankEnum.WARRIOR;
+				break;
+			case "a":
+				clanRank = RankEnum.APPRENTICE;
+				break;
+			case "k":
+				clanRank = RankEnum.KIT;
+				break;
+			case "e":
+				clanRank = RankEnum.ELDER;
+				break;
+			default:
+				clanRank = RankEnum.WARRIOR;
+				break;
+		}
+		ClanCat cc = new ClanCat(prefix, suffix, age, gender, appearance, clan, clanRank);
+		try {
+			cc = DaoFactory.getInstance().getClanCatDao().createClanCat(cc);
+			final GenericEntity<ClanCat> json = new GenericEntity<>(cc) {};
+			return Response.ok().entity(json).build();
 		} catch (final Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Clan cat creation failed").build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -158,75 +177,104 @@ public class ClanCatService {
 				|| formParams.get("appearance") == null && formParams.get("Clan") == null && formParams.get("rank") == null) {
 			return Response.status(Response.Status.EXPECTATION_FAILED).entity("All fields empty").build();
 		}
-		ClanCat cat = null;
+		final String idTemp = formParams.getFirst("id");
+		final String prefix = formParams.getFirst("prefix");
+		final String suffix = formParams.getFirst("suffix");
+		final String ageTemp = formParams.getFirst("age");
+		final String genderTemp = formParams.getFirst("gender");
+		final String rankTemp = formParams.getFirst("rank");
+		final String appearance = formParams.getFirst("appearance");
+		final String clanIdTemp = formParams.getFirst("Clan");
+		if (prefix == null || prefix.isBlank() || suffix == null || suffix.isBlank() || ageTemp == null || ageTemp.isEmpty() || genderTemp == null || 
+				genderTemp.isBlank() || rankTemp == null || rankTemp.isBlank() || appearance == null || appearance.isBlank() || clanIdTemp == null || 
+				clanIdTemp.isBlank()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'un des paramètres obligatoires n'est pas fourni.").build();
+		}
+		int id;
+		int age;
+		int genderNb;
+		GenderEnum gender;
+		int clanId;
+		Clan clan;
+		RankEnum clanRank;
 		try {
-			DaoFactory.getInstance();
-			cat = DaoFactory.getClanCatDao().readObject(idClanCat);
-			if (formParams.getFirst("rank") != null) {
-				final RankEnum rank;
-				switch(formParams.getFirst("rank")) {
-				case "l":
-					rank = RankEnum.LEADER;
-					break;
-				case "d":
-					rank = RankEnum.DEPUTY;
-					break;
-				case "m":
-					rank = RankEnum.MEDICINE_CAT;
-					break;
-				case "w":
-					rank = RankEnum.WARRIOR;
-					break;
-				case "a":
-					rank = RankEnum.APPRENTICE;
-					break;
-				case "k":
-					rank = RankEnum.KIT;
-					break;
-				case "e":
-					rank = RankEnum.ELDER;
-					break;
-				default:
-					rank = RankEnum.WARRIOR;
-					break;
-				}
-				cat.setRank(rank);
+			id = Integer.parseInt(idTemp);
+		} catch (final NumberFormatException e){
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'id du chat de Clan fourni n'est pas valide.").build();
+		}
+		try {
+			age = Integer.parseInt(ageTemp);
+		} catch (final NumberFormatException e){
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'age fourni n'est pas valide.").build();
+		}
+		try {
+			genderNb = Integer.parseInt(genderTemp);
+			if(genderNb == 0) {
+				gender = GenderEnum.FEMALE;
+			} else if (genderNb == 1){
+				gender = GenderEnum.MALE;
+			} else return Response.status(Response.Status.EXPECTATION_FAILED).entity("Gender incorrectly entered.").build();
+		} catch (final NumberFormatException e){
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'id de Clan fourni n'est pas valide.").build();
+		}
+		try {
+			clanId = Integer.parseInt(ageTemp);
+			try {
+				clan = DaoFactory.getInstance().getClanDao().getClanById(clanId);
+			} catch (Exception e) {
+				return Response.status(Response.Status.EXPECTATION_FAILED).entity("Clan id incorrectly entered.").build();
 			}
-			final RankEnum updatedRank = cat.getRank();
-			if (formParams.getFirst("prefix") != null) {
-				final String prefix = formParams.getFirst("prefix");
-				cat.setPrefix(prefix);	
+		} catch (final NumberFormatException e){
+			return Response.status(Response.Status.BAD_REQUEST).entity("L'id de Clan fourni n'est pas valide.").build();
+		}
+		switch(formParams.getFirst("rank")) {
+			case "l":
+				clanRank = RankEnum.LEADER;
+				break;
+			case "d":
+				clanRank = RankEnum.DEPUTY;
+				break;
+			case "m":
+				clanRank = RankEnum.MEDICINE_CAT;
+				break;
+			case "w":
+				clanRank = RankEnum.WARRIOR;
+				break;
+			case "a":
+				clanRank = RankEnum.APPRENTICE;
+				break;
+			case "k":
+				clanRank = RankEnum.KIT;
+				break;
+			case "e":
+				clanRank = RankEnum.ELDER;
+				break;
+			default:
+				clanRank = RankEnum.WARRIOR;
+				break;
+		}
+		ClanCat cc = null;
+		try {
+			cc = DaoFactory.getInstance().getClanCatDao().getClanCatById(id);
+			if (cc == null) {
+				return Response.status(Response.Status.NOT_FOUND).entity("Aucun chat de Clan trouvé avec l'identifiant ".concat(idTemp)).build();
 			}
-			if (formParams.getFirst("suffix") != null) {
-				final String suffix = formParams.getFirst("suffix");
-				cat.setSuffix(updatedRank, suffix);	
-			}
-			if (formParams.getFirst("age") != null) {
-				final Integer age = Integer.parseInt(formParams.getFirst("age"));
-				cat.setAge(age);	
-			}
-			if (formParams.getFirst("gender") != null) {
-				final Integer genderNb = Integer.parseInt(formParams.getFirst("gender"));
-				if (genderNb == 0) {
-					final GenderEnum gender = GenderEnum.FEMALE;
-					cat.setGender(gender);
-				} else if (genderNb == 1) {
-					final GenderEnum gender = GenderEnum.MALE;
-					cat.setGender(gender);
-				}  else return Response.status(Response.Status.EXPECTATION_FAILED).entity("Gender entered is incorrect").build();
-			}
-			if (formParams.getFirst("appearance") != null) {
-				final String appearance = formParams.getFirst("appearance");
-				cat.setAppearance(appearance);	
-			}
-			if (formParams.getFirst("clan") != null) {
-				final Integer clanId = Integer.parseInt(formParams.getFirst("clan"));
-				final Clan clan = DaoFactory.getClanDao().readObject(clanId);
-				cat.setClan(clan);
-			}
-			return Response.status(Response.Status.OK).entity(cat).build();
 		} catch (final Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Clan cat update failed.").build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+		try {
+			cc.setPrefix(prefix);
+			cc.setSuffix(suffix);
+			cc.setAge(age);
+			cc.setGender(gender);
+			cc.setAppearance(appearance);
+			cc.setClan(clan);
+			cc.setClanRank(clanRank);
+			DaoFactory.getInstance().getClanCatDao().updateClanCat(cc);
+			final GenericEntity<ClanCat> json = new GenericEntity<>(cc) {};
+			return Response.ok().entity(json).build();
+		} catch (final Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -234,23 +282,20 @@ public class ClanCatService {
 	 * @DELETE deletes a specific Clan cat
 	 * @param idClancat
 	 * @return
-	 * @throws DaoException
+	 * @throws Exception 
 	 */
 	@DELETE
 	@Path("/delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteClanCat(@PathParam("id") int idClancat) throws DaoException {
-		ClanCat cat = null;
+	public Response deleteClanCat(@PathParam("id") int idClancat) throws Exception {
+		final IClanCatDao dao = DaoFactory.getInstance().getClanCatDao();
 		try {
-			DaoFactory.getInstance();
-			cat = DaoFactory.getClanCatDao().readObject(idClancat);
-			if ( cat == null) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Clan cat not found").build();	
-			} else {
-				ClanCatDaoBdd clanCatDaoBdd = new ClanCatDaoBdd();
-				clanCatDaoBdd.deleteObject(cat);
-				return Response.status(Response.Status.OK).entity("Clan cat deletion successful.").build();
+			final ClanCat cc = dao.getClanCatById(idClancat);
+			if (cc == null) {
+				return Response.status(Response.Status.NOT_FOUND).entity("Aucun chat de Clan avec l'id [".concat(Integer.toString(idClancat)).concat("] n'a été trouvé.")).build();
 			}
+			dao.deleteClanCat(idClancat);
+			return Response.ok().entity("Supprimé").build();
 		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
@@ -266,15 +311,10 @@ public class ClanCatService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllLeaders() throws DaoException {
 		try {
-			DaoFactory.getInstance();
-			List<ClanCat> leaders = null;
-			leaders = ((ClanCatDaoBdd) DaoFactory.getClanCatDao()).readAllLeaders();
-			if (leaders == null || leaders.isEmpty()) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Leaders not found").build();
-			}
-			final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(leaders) {};
+			final List<ClanCat> leaders = DaoFactory.getInstance().getClanCatDao().getAllLeaders();
+			final GenericEntity<List<ClanCat>> json = new GenericEntity<>(leaders) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -289,15 +329,10 @@ public class ClanCatService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllDeputies() throws DaoException {
 		try {
-			DaoFactory.getInstance();
-			List<ClanCat> deputies = null;
-			deputies = ((ClanCatDaoBdd) DaoFactory.getClanCatDao()).readAllDeputies();
-			if (deputies == null || deputies.isEmpty()) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Deputies not found").build();
-			}
-			final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(deputies) {};
+			final List<ClanCat> leaders = DaoFactory.getInstance().getClanCatDao().getAllDeputies();
+			final GenericEntity<List<ClanCat>> json = new GenericEntity<>(leaders) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
@@ -312,15 +347,10 @@ public class ClanCatService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllMedicineCats() throws DaoException {
 		try {
-			DaoFactory.getInstance();
-			List<ClanCat> medcats = null;
-			medcats = ((ClanCatDaoBdd) DaoFactory.getClanCatDao()).readAllMedicineCats();
-			if (medcats == null || medcats.isEmpty()) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Medicine cats not found").build();
-			}
-			final GenericEntity<List<ClanCat>> json = new GenericEntity<List<ClanCat>>(medcats) {};
+			final List<ClanCat> leaders = DaoFactory.getInstance().getClanCatDao().getAllMedCats();
+			final GenericEntity<List<ClanCat>> json = new GenericEntity<>(leaders) {};
 			return Response.ok().entity(json).build();
-		} catch (final DaoException e) {
+		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
