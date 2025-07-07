@@ -34,9 +34,8 @@ public class ClanService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getClans() throws DaoException {
 		try {
-			DaoFactory.getInstance();
 			List<Clan> clans = null;
-			clans = DaoFactory.getClanDao().readAllObject();
+			clans = DaoFactory.getInstance().getClanDao().getAllClans();
 			if (clans == null || clans.isEmpty()) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clans not found").build();
 			}

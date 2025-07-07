@@ -58,7 +58,8 @@ public class ClanCatService {
 		try {
 			s = DaoFactory.getInstance().getClanCatDao().getClanCatById(idClanCat);
 			if(s == null) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Aucun chat de Clan avec l'id [".concat(Integer.toString(idClanCat)).concat("] n'a été trouvé.")).build();
+				return Response.status(Response.Status.NOT_FOUND).entity("Aucun chat de Clan avec l'id [".concat(Integer.toString(idClanCat))
+						.concat("] n'a été trouvé.")).build();
 			}
 			final GenericEntity<ClanCat> json = new GenericEntity<>(s) {};
 			return Response.ok().entity(json).build();
@@ -165,7 +166,8 @@ public class ClanCatService {
 	/**
 	 * @PUT updates one or more attributes of a specific Clan cat
 	 * @param idClanCat
-	 * @param prefix AND/OR suffix AND/OR age AND/OR gender (0 (female) or 1 (male)) AND/OR appearance AND/OR Clan AND/OR rank (l (leader), d (deputy), m (med cat), w (warrior), a (apprentice), k (kit), e (elder))
+	 * @param prefix AND/OR suffix AND/OR age AND/OR gender (0 (female) or 1 (male)) AND/OR appearance AND/OR Clan AND/OR rank (l (leader), 
+	 * d (deputy), m (med cat), w (warrior), a (apprentice), k (kit), e (elder))
 	 * @return
 	 */
 	@PUT
