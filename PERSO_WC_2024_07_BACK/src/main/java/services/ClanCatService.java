@@ -153,7 +153,7 @@ public class ClanCatService {
 				clanRank = RankEnum.WARRIOR;
 				break;
 		}
-		ClanCat cc = new ClanCat(prefix, suffix, age, gender, appearance, clan, clanRank);
+		ClanCat cc = new ClanCat(age, gender, appearance, prefix, clan, clanRank, suffix);
 		try {
 			cc = DaoFactory.getInstance().getClanCatDao().createClanCat(cc);
 			final GenericEntity<ClanCat> json = new GenericEntity<>(cc) {};

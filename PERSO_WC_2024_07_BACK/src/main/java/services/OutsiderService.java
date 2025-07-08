@@ -27,16 +27,15 @@ public class OutsiderService {
 	/**
 	 * @GET all outsiders in database
 	 * @return
-	 * @throws DaoException
+	 * @throws Exception 
 	 */
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getOutsiders() throws DaoException {
+	public Response getOutsiders() throws Exception {
 		try {
-			DaoFactory.getInstance();
 			List<Outsider> outsiders = null;
-			outsiders = DaoFactory.getOutsiderDao().readAllObject();
+			outsiders = DaoFactory.getInstance().getOutsiderDao().getAllOutsiders();
 			if (outsiders == null || outsiders.isEmpty()) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Outsiders not found").build();
 			}
@@ -59,8 +58,7 @@ public class OutsiderService {
 	public Response getOutsiderById(@PathParam("id") int idOutsider) throws DaoException {
 		Outsider out = null;
 		try {
-			DaoFactory.getInstance();
-			out = DaoFactory.getOutsiderDao().readObject(idOutsider);
+			out = DaoFactory.getInstance().getOutsiderDao().getOutsiderById(idOutsider);
 			if (out == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Outsider not found").build();
 			} else {
@@ -117,7 +115,7 @@ public class OutsiderService {
 			outsider.setAppearance(appearance);
 			outsider.setStatus(status);
 			OutsiderDaoBdd outDaoBdd = new OutsiderDaoBdd();
-			outDaoBdd.createObject(outsider);
+			outDaoBdd.createOutsider(outsider);
 			return Response.status(Response.Status.CREATED).entity(outsider).build();
 		} catch (final Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Outsider creation failed").build();
@@ -140,8 +138,7 @@ public class OutsiderService {
 		}
 		Outsider out = null;
 		try {
-			DaoFactory.getInstance();
-			out = DaoFactory.getOutsiderDao().readObject(idOutsider);
+			out = DaoFactory.getInstance().getOutsiderDao().getOutsiderById(idOutsider);
 			if (formParams.getFirst("name") != null) {
 				final String name = formParams.getFirst("name");
 				out.setName(name);	
@@ -199,13 +196,12 @@ public class OutsiderService {
 	public Response deleteOutsider(@PathParam("id") int idOutsider) throws DaoException {
 		Outsider out = null;
 		try {
-			DaoFactory.getInstance();
-			out = DaoFactory.getOutsiderDao().readObject(idOutsider);
+			out = DaoFactory.getInstance().getOutsiderDao().getOutsiderById(idOutsider);
 			if ( out == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Outsider not found").build();	
 			} else {
 				OutsiderDaoBdd outDaoBdd = new OutsiderDaoBdd();
-				outDaoBdd.deleteObject(out);
+				outDaoBdd.deleteOutsider(idOutsider);
 				return Response.status(Response.Status.OK).entity("Outsider deletion successful.").build();
 			}
 		} catch (final Exception e) {

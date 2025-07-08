@@ -29,19 +29,19 @@ public class ClanCat extends ACat {
 	public Clan clan;
 	public RankEnum clanRank;
 	public ClanCat mentor = null;
-	@Column(name="lives")
+	public int formerApprentices = 0;
 	public int lives = 1;
 	
 	public ClanCat() {};
 	
-	public ClanCat(String prefix, String suffix, int age, GenderEnum gender, String appearance, Clan clan, RankEnum clanRank) {
-		this.prefix=prefix;
-		this.suffix=getSuffixByRank(clanRank, suffix);
+	public ClanCat(int age, GenderEnum gender, String appearance, String prefix, Clan clan, RankEnum clanRank, String suffix) {
 		this.age=age;
 		this.gender=gender;
 		this.appearance=appearance;
+		this.prefix=prefix;
 		this.clan=clan;
-		this.clanRank=clanRank;
+		this.clanRank=checkRankByAge(clanRank, age);
+		this.suffix=checkSuffixByRank(suffix, clanRank);
 	}
 
 	@Column(name="prefix")
@@ -61,10 +61,7 @@ public class ClanCat extends ACat {
 	public void setSuffix(String suffix) {
 		this.suffix=suffix;
 	}
-	
-	public void setSuffix(RankEnum rank, String suffix) {
-		this.suffix=getSuffixByRank(rank, suffix);
-	}
+
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="clan")
@@ -96,16 +93,35 @@ public class ClanCat extends ACat {
 		this.mentor=mentor;
 	}
 	
-	public void setMentor(RankEnum clanRank, ClanCat mentor) {
-		this.mentor=getMentorByRank(clanRank, mentor);
+	@Column(name="formerApps")
+	public int getFormerApprentices() {
+		return formerApprentices;
+	}
+
+	public void setFormerApprentices(int formerApprentices) {
+		this.formerApprentices = formerApprentices;
+	}
+
+	@Column(name="lives")
+	public int getLives() {
+		return lives;
 	}
 	
-	public void setLives(RankEnum rank, int lives) {
-		this.lives=getLivesByRank(rank, lives);
+	public void setLives(int lives) {
+		this.lives=lives;
+	}
+	
+	// returns proper rank according to age
+	public RankEnum checkRankByAge(RankEnum clanRank, int age) {
+		if (age<6) {
+			return RankEnum.KIT;
+		} else if (age>=6 && age<12) {
+			return RankEnum.APPRENTICE;
+		} else return clanRank;
 	}
 	
 	// return entered suffix or overrides it if the cat is of a rank that requires a specific suffix
-	public String getSuffixByRank(RankEnum clanRank, String suffix) {
+	public String checkSuffixByRank(String suffix, RankEnum clanRank) {
 		if(clanRank==RankEnum.LEADER) {
 			return "star";
 		} else if (clanRank==RankEnum.APPRENTICE) {
@@ -115,61 +131,12 @@ public class ClanCat extends ACat {
 		} else return suffix;
 	}
 	
-	// returns the cat's mentor or returns null if the cat isn't an apprentice
-	public ClanCat getMentorByRank(RankEnum clanRank, ClanCat mentor) {
-		if(clanRank==RankEnum.APPRENTICE) {
-			return mentor;
-		} else return null;
-	}
-	
 	// returns the amount of lives is 1 or returns the current amount of lives if the cat is a leader
-	public int getLivesByRank(RankEnum clanRank, int lives) {
+	public int checkLivesByRank(int lives, RankEnum clanRank) {
 		if(clanRank==RankEnum.LEADER) {
 			return lives;
 		} else return 1;
 	}
 	
-	// skips a moon and adds one to the cat's age
-	public void skipMoon() {
-		age++;
-	}
-	
-	// makes the cat become an apprentice only if age is above 6, then changes their rank, suffix and mentor accordingly
-	public void becomeApprentice(ClanCat mentor) {
-		if (age>=6) {
-			setClanRank(RankEnum.APPRENTICE);
-			setSuffix(RankEnum.APPRENTICE, "paw");
-			setMentor(RankEnum.APPRENTICE, mentor);
-		}
-	}
-	
-	// makes the cat become a warrior only if age is above 12, then changes rank, removes mentor and updates suffix to entered suffix
-	public void becomeWarrior(String suffix) {
-		if (age>=12) {
-			setClanRank(RankEnum.WARRIOR);
-			setSuffix(RankEnum.WARRIOR, suffix);
-			setMentor(RankEnum.WARRIOR, null);
-		}
-	}
-	
-	// makes the cat become a medicine cat only if age is above 12, then changes rank, removes mentor and updates suffix to entered suffix
-	public void becomeMedCat(String suffix) {
-		if (age>=12) {
-			setClanRank(RankEnum.MEDICINE_CAT);
-			setSuffix(RankEnum.MEDICINE_CAT, suffix);
-			setMentor(RankEnum.MEDICINE_CAT, null);
-		}
-	}
-	
-	// changes rank to deputy
-	public void becomeDeputy() {
-		setClanRank(RankEnum.DEPUTY);
-	}
-	
-	// changes rank to leader, updates suffix and grants 9 lives
-	public void becomeLedaer() {
-		this.lives=9;
-		setClanRank(RankEnum.LEADER);
-		setSuffix(RankEnum.LEADER, "star");
-	}
+
 }

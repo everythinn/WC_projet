@@ -58,8 +58,7 @@ public class ClanService {
 	public Response getClanById(@PathParam("id") int idClan) throws DaoException {
 		Clan clan = null;
 		try {
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();
 			} else {
@@ -75,12 +74,13 @@ public class ClanService {
 	 * @POST creates new Clan
 	 * @param name AND description AND territory type AND preys
 	 * @return
+	 * @throws Exception 
 	 */
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addClan(final MultivaluedMap<String, String> formParams) {
+	public Response addClan(final MultivaluedMap<String, String> formParams) throws Exception {
 		if (formParams.get("name") == null || formParams.get("description") == null || formParams.get("territory_type") == null || formParams.get("preys") == null) {
 			return Response.status(Response.Status.EXPECTATION_FAILED).entity("Parameters missing").build();
 		}
@@ -95,7 +95,7 @@ public class ClanService {
 			clan.setTerrType(territory_type);
 			clan.setPreys(preys);
 			ClanDaoBdd clanDaoBdd = new ClanDaoBdd();
-			clanDaoBdd.createObject(clan);
+			clanDaoBdd.createClan(clan);
 			return Response.status(Response.Status.CREATED).entity(clan).build();
 		} catch (final DaoException e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Clan creation failed").build();
@@ -118,8 +118,7 @@ public class ClanService {
 		}
 		Clan clan = null;
 		try {
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (formParams.getFirst("name") != null) {
 				final String name = formParams.getFirst("name");
 				clan.setName(name);	
@@ -154,13 +153,12 @@ public class ClanService {
 	public Response deleteClan(@PathParam("id") int idClan) throws DaoException {
 		Clan clan = null;
 		try {
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();	
 			} else {
 				ClanDaoBdd clanDaoBdd = new ClanDaoBdd();
-				clanDaoBdd.deleteObject(clan);
+				clanDaoBdd.deleteClan(idClan);
 				return Response.status(Response.Status.OK).entity("Clan deletion successful.").build();
 			}
 		} catch (final Exception e) {
@@ -181,8 +179,7 @@ public class ClanService {
 		try {
 			Clan clan = null;
 			ClanCat leader = null;
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();
 			}
@@ -212,8 +209,7 @@ public class ClanService {
 		try {
 			Clan clan = null;
 			ClanCat deputy = null;
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();
 			}
@@ -243,8 +239,7 @@ public class ClanService {
 		try {
 			Clan clan = null;
 			List<ClanCat> medCats = null;
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();
 			}
@@ -280,8 +275,7 @@ public class ClanService {
 		try {
 			Clan clan = null;
 			List<ClanCat> warriors = null;
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();
 			}
@@ -311,8 +305,7 @@ public class ClanService {
 		try {
 			Clan clan = null;
 			List<ClanCat> apprentices = null;
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();
 			}
@@ -342,8 +335,7 @@ public class ClanService {
 		try {
 			Clan clan = null;
 			List<ClanCat> kits = null;
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();
 			}
@@ -373,8 +365,7 @@ public class ClanService {
 		try {
 			Clan clan = null;
 			List<ClanCat> elders = null;
-			DaoFactory.getInstance();
-			clan = DaoFactory.getClanDao().readObject(idClan);
+			clan = DaoFactory.getInstance().getClanDao().getClanById(idClan);
 			if (clan == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Clan not found").build();
 			}
