@@ -1,0 +1,307 @@
+//normal view mode css
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    margin-top: 220px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3rem 2rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 0;
+}
+
+.header h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    color: #f5f1e8;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.header p {
+    font-size: 1.2em;
+    color: #f5f1e8;
+    font-style: italic;
+}
+
+.view-toggle {
+    margin-top: 220px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid #c0b896;
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: #e8e6e3;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.view-toggle:hover {
+    background: rgba(212, 175, 55, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+.clan-section {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(245, 241, 232, 0.1);
+}
+
+.clan-title {
+    font-size: 2.5em;
+    color: #f5f1e8;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.rank-section {
+    margin-bottom: 25px;
+}
+
+.rank-title {
+    font-size: 1.3em;
+    color: #c0b896;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 5px;
+}
+
+.cat-entry {
+    margin-bottom: 8px;
+    padding: 5px 0;
+    line-height: 1.5;
+}
+
+.cat-name {
+    font-weight: bold;
+    color: #e8e6e3;
+}
+
+.cat-description {
+    color: #b8b5a8;
+    margin-left: 10px;
+}
+
+.deceased {
+    color: #888;
+    font-style: italic;
+}
+
+/* Grid view styles */
+.grid-view {
+    display: none;
+}
+
+.grid-view.active {
+    display: block;
+}
+
+.grid-view .clan-section {
+    background: rgba(46, 81, 60, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.grid-view .clan-title {
+    font-size: 2.2em;
+    margin-bottom: 25px;
+}
+
+.grid-view .rank-section {
+    margin-bottom: 30px;
+}
+
+.grid-view .rank-title {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.cat-card {
+    background: rgba(46, 81, 60, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: all 0.3s ease;
+}
+
+.cat-card:hover {
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+}
+
+.cat-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    background: linear-gradient(45deg, #8B4513, #D2691E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: white;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.cat-card-name {
+    font-size: 0.9em;
+    color: #e8e6e3;
+    font-weight: bold;
+}
+
+.cat-card.deceased {
+    opacity: 0.6;
+}
+
+.cat-card.deceased .cat-avatar {
+    background: linear-gradient(45deg, #555, #777);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.5em;
+    }
+    
+    .nav-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .view-toggle {
+        position: static;
+        margin-bottom: 20px;
+        align-self: flex-end;
+    }
+    
+    .clan-title {
+        font-size: 2em;
+    }
+    
+    .cat-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+    }
+}
+
+//icons view mode css
+
+.simplified-clan {
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.simplified-rank {
+    margin-bottom: 20px;
+}
+
+.simplified-rank-title {
+    font-size: 1.1rem;
+    color: #87ceeb;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.cat-card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.cat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+.cat-headshot {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.cat-card-name {
+    font-size: 0.9rem;
+    color: #e8e3d3;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .clans-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .site-title {
+        font-size: 2.5rem;
+    }
+    
+    .view-toggle {
+        position: static;
+        margin: 20px auto;
+        display: block;
+        width: fit-content;
+    }
+    
+    .cats-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}

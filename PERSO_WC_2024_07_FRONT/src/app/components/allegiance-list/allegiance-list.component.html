@@ -1,0 +1,149 @@
+<main>
+    <section class="title-section">
+        <button class="view-toggle" (click)="toggleView()">
+            @if (isSimplified==false){
+                <span id="toggle-text">📋 Vue Portraits</span>
+            } @else if (isSimplified==true){
+                <span id="toggle-text">📋 Vue Simplifiée</span>
+            }
+        </button>
+    </section>
+
+    @if (isSimplified==false){
+        <!--normal allegiance section with no icons-->
+        <section class="clan-section">
+            <div>
+
+                <h2 class="clan-title">Clan des Ténèbres</h2>
+                    
+                <div class="rank-section">
+                    <h3 class="rank-title">Chef</h3>
+                    <div class="cat-entry">
+                        <span class="cat-name">Étoile de Noix</span>
+                        <span class="cat-description">: Chat brun-roux pâle aux yeux verts</span>
+                    </div>
+                </div>
+
+                <div class="rank-section">
+                    <h3 class="rank-title">Lieutenant</h3>
+                    <div class="cat-entry">
+                        <span class="cat-name">Cœur Sombre</span>
+                        <span class="cat-description">: Femelle gris foncé aux yeux bleus</span>
+                    </div>
+                </div>
+
+                <div class="rank-section">
+                    <h3 class="rank-title">Guérisseur</h3>
+                    <div class="cat-entry">
+                        <span class="cat-name">Truffe Givrée</span>
+                        <span class="cat-description">: Mâle blanc comme neige</span>
+                    </div>
+                </div>
+
+                <div class="rank-section">
+                    <h3 class="rank-title">Guerriers</h3>
+                    <div class="cat-entry">
+                        <span class="cat-name">Croc de Loup</span>
+                        <span class="cat-description">- Mâle brun moucheté aux yeux bruns</span>
+                    </div>
+                    <div class="cat-entry">
+                        <span class="cat-name">Feu Follet</span>
+                        <span class="cat-description">- Femelle rousse comme un renard aux yeux ambrés</span>
+                    </div>
+                    <div class="cat-entry">
+                        <span class="cat-name">Éclair d'Argent</span>
+                        <span class="cat-description">- Mâle gris argenté aux yeux bleus</span>
+                    </div>
+                    <div class="cat-entry">
+                        <span class="cat-name">Fleur de Sureau</span>
+                        <span class="cat-description">- Chatte crème aux yeux gris-verts</span>
+                    </div>
+                    <div class="cat-entry">
+                        <span class="cat-name">Griffe de Grêle</span>
+                        <span class="cat-description">- Mâle gris et blanc à poils mi-longs aux yeux ambrés</span>
+                    </div>
+                    <div class="cat-entry">
+                        <span class="cat-name">Rivière de Galet</span>
+                        <span class="cat-description">- Femelle noire aux longues pattes et au ventre blancs avec une flamme blanche sur la face au poil lustré et aux 
+                            yeux ambrés</span>
+                    </div>
+                    <div class="cat-entry">
+                        <span class="cat-name">Feuille d’Érable</span>
+                        <span class="cat-description">- Grande chatte vigoureuse rousse et blanche aux yeux ambrés, aux poils épais et aux griffes aiguisées</span>
+                    </div>
+                    <div class="cat-entry">
+                        <span class="cat-name">Plume de Paon</span>
+                        <span class="cat-description">- Très jolie femelle écaille et blanc aux yeux bleus-verts singuliers</span>
+                    </div>
+                    <div class="cat-entry">
+                        <span class="cat-name">Fleur d’Écume</span>
+                        <span class="cat-description">- Petite chatte tricolore gris perle, noire et blanche aux yeux bleus</span>
+                    </div>
+                </div>
+
+                <section class="rank-section">
+                    <h3 class="rank-title">Apprentis</h3>
+                    <div class="cat-entry">
+                        <span class="cat-name">Nuage de Colombe</span>
+                        <span class="cat-description">- Femelle grise aux pattes blanches</span>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+    } @else if (isSimplified == true){
+        <div class="simplified-view" id="simplified-view">
+            <div class="simplified-clan">
+                <h2 class="clan-title">Clan des Ténèbres</h2>
+                
+                <div class="simplified-rank">
+                    <h4 class="simplified-rank-title">Chef</h4>
+                    <div class="cats-grid">
+                        <div class="cat-card">
+                            <img src="assets/mirk.jpg" alt="Clan des Ténèbres" class="cat-headshot">
+                            <div class="cat-card-name">Étoile de Lande</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simplified-rank">
+                    <h4 class="simplified-rank-title">Lieutenant</h4>
+                    <div class="cats-grid">
+                        <div class="cat-card">
+                            <div class="cat-headshot">🐱</div>
+                            <div class="cat-card-name">Patte Légère</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simplified-rank">
+                    <h4 class="simplified-rank-title">Guérisseur</h4>
+                    <div class="cats-grid">
+                        <div class="cat-card">
+                            <div class="cat-headshot">🐱</div>
+                            <div class="cat-card-name">Herbe Folle</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simplified-rank">
+                    <h4 class="simplified-rank-title">Guerriers</h4>
+                    <div class="cats-grid">
+                        <div class="cat-card">
+                            <div class="cat-headshot">🐱</div>
+                            <div class="cat-card-name">Vent Rapide</div>
+                        </div>
+                        <div class="cat-card">
+                            <div class="cat-headshot">🐱</div>
+                            <div class="cat-card-name">Plume de Faucon</div>
+                        </div>
+                        <div class="cat-card">
+                            <div class="cat-headshot">🐱</div>
+                            <div class="cat-card-name">Course d'Étoile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</main>
