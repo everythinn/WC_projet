@@ -14,34 +14,6 @@ main {
     padding: 3rem 2rem;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative;
-    z-index: 2;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 40px;
-    padding: 40px 0;
-}
-
-.header h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1.5rem;
-    color: #f5f1e8;
-    font-weight: 300;
-    line-height: 1.2;
-}
-
-.header p {
-    font-size: 1.2em;
-    color: #f5f1e8;
-    font-style: italic;
-}
-
 .view-toggle {
     margin-top: 220px;
     position: fixed;
@@ -64,12 +36,12 @@ main {
     box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
 }
 
-.clan-section {
+.clan-section{
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(15px);
     border-radius: 16px;
     padding: 2rem;
-    border: 1px solid rgba(245, 241, 232, 0.1);
+    border: 1px solid rgba(245, 241, 232, 0.1)
 }
 
 .clan-title {
@@ -224,26 +196,8 @@ main {
 
 //icons view mode css
 
-.simplified-clan {
-    background: rgba(0,0,0,0.3);
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
 .simplified-rank {
     margin-bottom: 20px;
-}
-
-.simplified-rank-title {
-    font-size: 1.1rem;
-    color: #87ceeb;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .cats-grid {
@@ -267,15 +221,15 @@ main {
 }
 
 .cat-headshot {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: 40%;
     margin: 0 auto 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    color: white;
+    color: rgba(0, 0, 0, 0.4);
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
@@ -295,6 +249,7 @@ main {
     }
     
     .view-toggle {
+        margin-top: 500px;
         position: static;
         margin: 20px auto;
         display: block;
