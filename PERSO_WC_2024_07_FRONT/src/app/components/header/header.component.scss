@@ -47,6 +47,11 @@ header {
     text-shadow: 0 2px 20px rgba(245, 241, 232, 0.3);
 }
 
+.site-title:hover{
+    text-transform: translateY(-2px);
+    text-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
 .site-subtitle {
     font-size: 1.1rem;
     font-style: italic;
