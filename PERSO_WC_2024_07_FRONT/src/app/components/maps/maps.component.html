@@ -1,5 +1,126 @@
 <main>
     <section class="map-section">
-            <h2 class="map-title">Cartes des territoires</h2>
+        <h2 class="map-title">Cartes des territoires</h2>
+        <div class="maps-div">
+            <div class="map-item">
+                <img src="assets/maps/clearingForestMap.jpg" alt="Map of the Clearing Forest" class="main-maps" id="clearingForestMap">
+                <label for="clearingForestMap">Clearing Forest</label>
+                <div class="mini-map-buttons">
+                    <button class="mini-map-toggle-btn" (click)="toggleStoneClanSubmaps()">Clan des Pierres</button>
+                    <button class="mini-map-toggle-btn" (click)="toggleDayClanSubmaps()">Clan du Jour</button>
+                    <button class="mini-map-toggle-btn" (click)="toggleMirkClanSubmaps()">Clan des Ténèbres</button>
+                    <button class="mini-map-toggle-btn" (click)="toggleDewClanSubmaps()">Clan de la Rosée</button>
+                    <button class="mini-map-toggle-btn" (click)="toggleSunClanSubmaps()">Clan du Soleil</button>
+                    <button class="mini-map-toggle-btn" (click)="toggleMoonClanSubmaps()">Clan de la Lune</button>
+                </div>
+            </div>
+            <div class="map-item">
+                <img src="assets/maps/lushHillsMap.png" alt="Map of the Lush Hills" class="main-maps" id="lushHillsMap">
+                <label for="lushHillsMap">Lush Hills</label>
+                <!-- <div class="mini-map-buttons">
+                    <button class="mini-map-toggle-btn" onclick="toggleSubmaps('hills-stoneclan')">Clan des Pierres</button>
+                    <button class="mini-map-toggle-btn" onclick="toggleSubmaps('hills-dayclan')">Clan du Jour</button>
+                    <button class="mini-map-toggle-btn" onclick="toggleSubmaps('hills-nightclan')">Clan de la Nuit</button>
+                </div> -->
+            </div>
+        </div>
     </section>
-</main>>
+
+    <div class="section-divider"></div>
+
+    <!-- StoneClan Submaps -->
+    <div class="submaps-section" *ngIf="showStoneClanSubmaps==true">
+      <h3 class="submaps-title">Détails - Clan des Pierres</h3>
+      <div class="submaps-grid">
+        <div class="submap-item" *ngFor="let submap of stoneClanSubmaps">
+          <img 
+            [src]="submap.src" 
+            [alt]="submap.alt" 
+            [id]="submap.id"
+            class="submap-image">
+          <label [for]="submap.id">{{ submap.label }}</label>
+          <p>{{ submap.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DayClan Submaps -->
+    <div class="submaps-section" *ngIf="showDayClanSubmaps==true">
+      <h3 class="submaps-title">Détails - Clan du Jour</h3>
+      <div class="submaps-grid">
+        <div class="submap-item" *ngFor="let submap of dayClanSubmaps">
+          <img 
+            [src]="submap.src" 
+            [alt]="submap.alt" 
+            [id]="submap.id"
+            class="submap-image">
+          <label [for]="submap.id">{{ submap.label }}</label>
+          <p>{{ submap.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MirkClan Submaps -->
+    <div class="submaps-section" *ngIf="showMirkClanSubmaps==true">
+      <h3 class="submaps-title">Détails - Clan des Ténèbres</h3>
+      <div class="submaps-grid">
+        <div class="submap-item" *ngFor="let submap of mirkClanSubmaps">
+          <img 
+            [src]="submap.src" 
+            [alt]="submap.alt" 
+            [id]="submap.id"
+            class="submap-image">
+          <label [for]="submap.id">{{ submap.label }}</label>
+          <p>{{ submap.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DewClan Submaps -->
+    <div class="submaps-section" *ngIf="showDewClanSubmaps==true">
+      <h3 class="submaps-title">Détails - Clan de la Rosée</h3>
+      <div class="submaps-grid">
+        <div class="submap-item" *ngFor="let submap of dewClanSubmaps">
+          <img 
+            [src]="submap.src" 
+            [alt]="submap.alt" 
+            [id]="submap.id"
+            class="submap-image">
+          <label [for]="submap.id">{{ submap.label }}</label>
+          <p>{{ submap.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SunClan Submaps -->
+    <div class="submaps-section" *ngIf="showSunClanSubmaps==true">
+      <h3 class="submaps-title">Détails - Clan du Soleil</h3>
+      <div class="submaps-grid">
+        <div class="submap-item" *ngFor="let submap of sunClanSubmaps">
+          <img 
+            [src]="submap.src" 
+            [alt]="submap.alt" 
+            [id]="submap.id"
+            class="submap-image">
+          <label [for]="submap.id">{{ submap.label }}</label>
+          <p>{{ submap.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MoonClan Submaps -->
+    <div class="submaps-section" *ngIf="showMoonClanSubmaps==true">
+      <h3 class="submaps-title">Détails - Clan de la Lune</h3>
+      <div class="submaps-grid">
+        <div class="submap-item" *ngFor="let submap of moonClanSubmaps">
+          <img 
+            [src]="submap.src" 
+            [alt]="submap.alt" 
+            [id]="submap.id"
+            class="submap-image">
+          <label [for]="submap.id">{{ submap.label }}</label>
+          <p>{{ submap.description }}</p>
+        </div>
+      </div>
+    </div>
+</main>

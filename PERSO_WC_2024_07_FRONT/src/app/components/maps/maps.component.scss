@@ -27,3 +27,181 @@ main {
     margin-bottom: 30px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
+
+.maps-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5%;
+    align-items: start;
+}
+
+.map-item {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    border-radius: 10%;
+    margin: 0 auto 8px;
+    border: 2px solid #c0b896;
+}
+
+label{
+    font-weight: bold;
+    color: #e8e6e3;
+}
+
+.mini-map-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.mini-map-toggle-btn {
+    background: rgba(0, 0, 0, 0.4);
+    color: #e8e6e3;
+    border: 2px solid #c0b896;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.mini-map-toggle-btn:hover {
+    background: rgba(212, 175, 55, 0.2);;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+.mini-map-toggle-btn.active {
+    background: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Submaps Section Styles
+.submaps-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(245, 241, 232, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.submaps-title {
+    font-size: 1.8rem;
+    color: #c0b896;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.submaps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.submap-item {
+    display: grid;
+    gap: 10px;
+    text-align: center;
+    background: rgba(245, 241, 232, 0.05);
+    color: #e8e6e3;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(245, 241, 232, 0.1);
+
+    &:hover {
+        background: rgba(245, 241, 232, 0.1);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+}
+
+.submap-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(192, 184, 150, 0.5);
+}
+
+.submap-item label {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+    .maps-div {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .submaps-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .map-title {
+        font-size: 2rem;
+    }
+    
+    .submaps-title {
+        font-size: 1.5rem;
+    }
+    
+    .toggle-btn {
+        min-width: 160px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 2rem 1rem;
+    }
+    
+    .map-section {
+        padding: 1.5rem;
+    }
+    
+    .submap-image {
+        height: 150px;
+    }
+}

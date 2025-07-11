@@ -82,48 +82,6 @@ main {
     margin-left: 10px;
 }
 
-.deceased {
-    color: #888;
-    font-style: italic;
-}
-
-/* Grid view styles */
-.grid-view {
-    display: none;
-}
-
-.grid-view.active {
-    display: block;
-}
-
-.grid-view .clan-section {
-    background: rgba(46, 81, 60, 0.1);
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 40px;
-}
-
-.grid-view .clan-title {
-    font-size: 2.2em;
-    margin-bottom: 25px;
-}
-
-.grid-view .rank-section {
-    margin-bottom: 30px;
-}
-
-.grid-view .rank-title {
-    font-size: 1.1em;
-    margin-bottom: 15px;
-}
-
-.cat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
 .cat-card {
     background: rgba(46, 81, 60, 0.3);
     border-radius: 10px;
@@ -139,35 +97,13 @@ main {
     box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
 }
 
-.cat-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin: 0 auto 8px;
-    background: linear-gradient(45deg, #8B4513, #D2691E);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5em;
-    color: white;
-    border: 2px solid rgba(212, 175, 55, 0.3);
-}
-
 .cat-card-name {
     font-size: 0.9em;
     color: #e8e6e3;
     font-weight: bold;
 }
 
-.cat-card.deceased {
-    opacity: 0.6;
-}
-
-.cat-card.deceased .cat-avatar {
-    background: linear-gradient(45deg, #555, #777);
-}
-
-/* Responsive design */
+//responsive
 @media (max-width: 768px) {
     .header h1 {
         font-size: 2.5em;
@@ -194,8 +130,8 @@ main {
     }
 }
 
-//icons view mode css
 
+//icons view mode css
 .simplified-rank {
     margin-bottom: 20px;
 }
@@ -239,6 +175,7 @@ main {
     font-weight: bold;
 }
 
+//responsive
 @media (max-width: 768px) {
     .clans-container {
         grid-template-columns: 1fr;
