@@ -8,7 +8,14 @@
             <h1 routerLink="home" routerLinkActive="active" class="site-title">LaGuerreDesClans</h1>
             <p class="site-subtitle">Explore the Clans. Learn their stories. Join their legacy.</p>
             <div class="header-buttons">
-                <a routerLink="clans" routerLinkActive="active" href="#" class="header-btn">Découvrir les Clans</a>
+                <div class="dropdown">
+                    <button class="header-btn">Découvrir les Clans</button>
+                    <div class="dropdown-content">
+                        <a routerLink="clans" routerLinkActive="active">Clan des Ténèbres</a>
+                        <a routerLink="clans" routerLinkActive="active">Clan de la Lumière</a>
+                        <a routerLink="clans" routerLinkActive="active">Clan de la Brume</a>
+                    </div>
+                </div>
                 <a routerLink="maps" routerLinkActive="active" href="#" class="header-btn">Cartes & Territoires</a>
                 <a routerLink="life" routerLinkActive="active" href="#" class="header-btn">La vie dans les Clans</a>
                 <a routerLink="bonuses" routerLinkActive="active" href="#" class="header-btn">Bonus & Biographies</a>

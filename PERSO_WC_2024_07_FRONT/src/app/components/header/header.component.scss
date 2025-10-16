@@ -69,15 +69,29 @@ header {
 }
 
 .header-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.8rem;
+    min-height: 40px;
+    min-width: 120px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 300;
+    text-decoration: none;
     background: rgba(245, 241, 232, 0.1);
     color: #f5f1e8;
-    padding: 0.8rem 1.8rem;
     border: 1px solid rgba(245, 241, 232, 0.2);
     border-radius: 8px;
-    text-decoration: none;
-    font-weight: 300;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
+    cursor: pointer;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .header-btn:hover {
@@ -85,4 +99,69 @@ header {
     border-color: rgba(245, 241, 232, 0.4);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: rgba(15, 20, 25, 0.95);
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border: 1px solid rgba(245, 241, 232, 0.2);
+    backdrop-filter: blur(15px);
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-content a {
+  color: #f5f1e8;
+  padding: 0.8rem 1.2rem;
+  text-decoration: none;
+  display: block;
+  transition: background 0.3s;
+}
+
+.dropdown-content a:hover {
+  background: rgba(245, 241, 232, 0.15);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeDown 0.3s ease forwards;
+}
+
+.dropdown:hover .header-btn {
+  background: rgba(245, 241, 232, 0.15);
+  border-color: rgba(245, 241, 232, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
