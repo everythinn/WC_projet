@@ -120,25 +120,67 @@ export class MapsComponent {
 
   toggleStoneClanSubmaps() : void {
     this.showStoneClanSubmaps = !this.showStoneClanSubmaps;
+
+    if(this.showStoneClanSubmaps) {
+      setTimeout(() => {
+        const el = document.getElementById('stone_map');
+        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 0);
+    }
   }
 
   toggleDayClanSubmaps() : void {
     this.showDayClanSubmaps = !this.showDayClanSubmaps;
+
+      if(this.showDayClanSubmaps) {
+      setTimeout(() => {
+        const el = document.getElementById('day_map');
+        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 0);
+    }
   }
 
   toggleMirkClanSubmaps() : void {
     this.showMirkClanSubmaps = !this.showMirkClanSubmaps;
+
+      if(this.showMirkClanSubmaps) {
+      setTimeout(() => {
+        const el = document.getElementById('mirk_map');
+        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 0);
+    }
   }
 
   toggleDewClanSubmaps() : void {
     this.showDewClanSubmaps = !this.showDewClanSubmaps;
+
+      if(this.showDewClanSubmaps) {
+      setTimeout(() => {
+        const el = document.getElementById('dew_map');
+        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 0);
+    }
   }
 
   toggleSunClanSubmaps() : void {
     this.showSunClanSubmaps = !this.showSunClanSubmaps;
+
+      if(this.showSunClanSubmaps) {
+      setTimeout(() => {
+        const el = document.getElementById('sun_map');
+        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 0);
+    }
   }
 
   toggleMoonClanSubmaps() : void {
     this.showMoonClanSubmaps = !this.showMoonClanSubmaps;
+
+      if(this.showMoonClanSubmaps) {
+      setTimeout(() => {
+        const el = document.getElementById('moon_map');
+        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 0);
+    }
   }
 }
